@@ -1,0 +1,5 @@
+streamlit
+pdfplumber
+playwright
+openai
+python-dotenv 

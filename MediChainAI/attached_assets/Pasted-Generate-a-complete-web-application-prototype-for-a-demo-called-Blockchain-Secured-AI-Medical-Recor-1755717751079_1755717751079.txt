@@ -1,0 +1,86 @@
+Generate a complete web application prototype for a demo called "Blockchain-Secured AI Medical Record Sharing with Crypto Incentives." This app simulates a secure healthcare data platform where users (as patients) can upload mock health data, have it analyzed by AI for insights, store and share it securely on blockchain, and earn fake crypto tokens as incentives for sharing. The app should be built using Flask for the backend, React for the frontend, Hyperledger Fabric for blockchain integration (or a simulated version if full Fabric is complex—use a mock blockchain API for demo purposes), and TensorFlow for AI analysis. Ensure the app is interactive, privacy-focused, and suitable for tech exhibit demonstrations, with a simple, intuitive UI.
+Overall Functionality:
+
+User Roles: Primarily "patients" for the demo, but include basic views for "researchers" or "doctors" to request/shared data.
+Core Workflow:
+
+User registers/logs in with a decentralized wallet (simulate with MetaMask or a simple form-based auth).
+Upload mock health data (e.g., via forms for blood pressure, fitness stats, or file uploads for JSON/CSV mocks).
+AI analyzes data to provide insights (e.g., risk predictions for conditions like heart disease).
+Data is encrypted and stored on blockchain; users can grant sharing permissions.
+Upon sharing (e.g., anonymized to researchers), users earn fake tokens, viewable in a wallet dashboard.
+Audit logs and visualizations show data history and aggregate insights.
+
+
+Security/Privacy: Client-side encryption, consent-based sharing via smart contracts, immutable blockchain logs.
+Incentives: Fake "HealthTokens" minted on sharing; redeemable for virtual perks in the demo (e.g., extra AI analyses).
+Demo Mode: Use mock data only; no real sensitive info. Make it fast (under 5 minutes per flow) for exhibits.
+Tech Constraints: Keep it deployable locally (e.g., via Docker). Include sample data and pre-trained AI models.
+
+Key Components:
+1. Frontend Components (React-based UI):
+
+Landing Page: Welcome screen with app overview, "Start Demo" button, and links to learn more (e.g., privacy benefits).
+Registration/Login Modal: Form for username/email, or integrate MetaMask for wallet connect. Generate a unique user ID/key pair.
+Data Upload Dashboard:
+
+Forms: Inputs for mock data (e.g., dropdowns for age/gender, sliders for vitals, file upload for datasets).
+Preview section: Show uploaded data in a table/chart before submission.
+Button: "Encrypt & Upload" to trigger backend processing.
+
+
+AI Analysis View:
+
+Results page: Display insights (e.g., "Risk Score: 15% - Recommendations: Exercise more") with charts (use Chart.js).
+Explainability: Show AI reasoning (e.g., "Based on high BP and age factors").
+
+
+Sharing & Consent Interface:
+
+List of data items with checkboxes for sharing.
+Consent form: Select recipients (mock users like "Researcher1"), set permissions (view-only, anonymized).
+Button: "Share & Earn Tokens" – triggers blockchain transaction and reward.
+
+
+Wallet & Rewards Dashboard:
+
+Balance display: Show earned tokens with transaction history.
+Redeem section: Buttons for virtual rewards (e.g., "Unlock Premium Insight").
+
+
+Audit Log Viewer: Table showing data access history (who, when, what) with blockchain transaction IDs.
+Visualizations: Interactive charts for personal data trends and aggregate shared data (anonymized).
+Global Elements: Navigation bar (Home, Upload, Analyze, Share, Wallet, Logs). Use responsive design for desktop/mobile exhibits.
+
+2. Backend Functionality (Flask-based):
+
+API Endpoints:
+
+POST /register: Create user profile and wallet.
+POST /upload: Encrypt data (AES-256), store on blockchain/IPFS mock.
+GET/POST /analyze: Run TensorFlow model on data for predictions; return JSON results.
+POST /share: Handle consent, execute smart contract for sharing, mint tokens.
+GET /wallet: Fetch balance and history.
+GET /logs: Retrieve blockchain audit trails.
+
+
+Blockchain Integration: Use Hyperledger Fabric SDK (or Ethereum testnet as fallback). Deploy simple chaincode/smart contracts for:
+
+Data storage (encrypted blobs).
+Access control (permissions via ACL).
+Token minting (ERC-20 like for fake tokens).
+
+
+AI Integration: Pre-load a TensorFlow model (e.g., simple neural net trained on mock health datasets). Process inputs securely without storing raw data long-term.
+Database: Use SQLite for user sessions; blockchain for persistent data.
+Error Handling: Graceful messages for failures (e.g., "Sharing failed – check connection").
+
+3. Additional Features:
+
+Interactivity: Real-time updates via WebSockets (e.g., token balance refreshes).
+Education/Tooltips: Hover tips explaining concepts (e.g., "Blockchain ensures your data can't be altered").
+Export/Share: Generate QR codes for demo results to share with attendees.
+Scalability/Simplicity: Limit to single-user mode for demos; add multi-user if time allows.
+Testing: Include unit tests for core flows and sample scripts to run the app.
+
+Output the full code structure, including folders (e.g., /frontend, /backend), dependencies (requirements.txt/package.json), and a README with setup instructions (e.g., "docker-compose up"). Make it open-source friendly and easy to customize. If generation is partial, prioritize the core workflow.

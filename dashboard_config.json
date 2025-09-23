@@ -1,0 +1,44 @@
+{
+  "Accijustice": {
+    "command": "npm run dev",
+    "url": "http://localhost:8080/"
+  },
+  "Multi_Agent_Chatbot": {
+    "command": "npm run dev",
+    "url": "http://localhost:3002/"
+  },
+  "MediChainAI": {
+    "command": "npm run dev",
+    "url": "http://localhost:5001/"
+  },
+  "blockchain-explorer": {
+    "command": "npm run dev",
+    "url": "http://localhost:5173/"
+  },
+  "content-generator": {
+    "command": "npm run dev",
+    "url": "http://localhost:8080/"
+  },
+  "multiagentchatbot": {
+    "command": "npm run dev",
+    "url": "http://localhost:8081/"
+  },
+  "Summarizer_AI": {
+    "command": "streamlit run app.py",
+    "url": "http://localhost:8501/"
+  },
+  "formfilling_agent": {
+    "commands": [
+      "",
+      "formfillingagent-browser/streamlit run app.py --server.port 8507"
+    ],
+    "url": "http://localhost:8507/"
+  },
+  "Linkedin_lead_generator": {
+    "command": "python linkedin_connect_browseruse.py"
+  },
+  "maskdata": {
+    "commands": ["streamlit run app.py"],
+    "url": "http://localhost:8501/"
+  }
+} 

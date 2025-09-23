@@ -1,0 +1,12 @@
+Flask
+psutil 
+langchain_openai
+browser_use
+python-dotenv
+pandas
+streamlit
+PyPDF2
+xlsxwriter
+
+pdfplumber
+playwright 

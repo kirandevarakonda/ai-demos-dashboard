@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Demos Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6a05ad;
+            --secondary-color: #d1c4e9;
+            --accent-color: #e0f2f7;
+            --text-color: #333;
+            --light-text-color: #555;
+            --background-color: #f0f2f5;
+            --card-background: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
+            --success-color: #4CAF50;
+            --error-color: #f44336;
+            --info-color: #2196F3;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 2.5em;
+            letter-spacing: 0.5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: var(--accent-color);
+        }
+
+        button, .go-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em;
+            margin-right: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .start {
+            background: var(--success-color);
+            color: white;
+            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+        }
+        .start:hover { background: #45a049; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3); }
+
+        .stop {
+            background: var(--error-color);
+            color: white;
+            box-shadow: 0 4px 8px rgba(244, 67, 54, 0.2);
+        }
+        .stop:hover { background: #da3329; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(244, 67, 54, 0.3); }
+
+        .go-btn {
+            background: var(--info-color);
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(33, 150, 243, 0.2);
+        }
+        .go-btn:hover { background: #1976d2; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(33, 150, 243, 0.3); }
+
+        .running {
+            color: var(--success-color);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .running::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: var(--success-color);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        .stopped {
+            color: var(--error-color);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .stopped::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: var(--error-color);
+            border-radius: 50%;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+        }
+
+        .cmd {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85em;
+            color: var(--light-text-color);
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            display: inline-block;
+            word-break: break-all;
+        }
+
+        .cmd:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body { padding: 20px; }
+            .container { padding: 15px; }
+            h1 { font-size: 2em; }
+            th, td { padding: 10px 15px; }
+            button, .go-btn { padding: 8px 15px; font-size: 0.9em; }
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            h1 { font-size: 1.8em; }
+            table, thead, tbody, th, td, tr { display: block; }
+            th {
+                text-align: right;
+                padding: 10px 15px;
+                background-color: transparent;
+                color: var(--text-color);
+                font-weight: 600;
+                display: none; /* Hide table headers on small screens */
+            }
+            tr {
+                margin-bottom: 15px;
+                border: 1px solid var(--border-color);
+                border-radius: 10px;
+                background-color: var(--card-background);
+                box-shadow: 0 4px 10px var(--shadow-light);
+            }
+            td {
+                border-bottom: 1px solid var(--border-color);
+                text-align: right;
+                position: relative;
+                padding-left: 50%;
+            }
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: calc(50% - 30px);
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: 600;
+                color: var(--light-text-color);
+            }
+            td:last-child {
+                border-bottom: none;
+            }
+            td.action-buttons {
+                text-align: left;
+                padding-top: 15px;
+            }
+            td.action-buttons::before {
+                content: 'Actions';
+                display: block;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Demos Dashboard</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Commands</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td data-label="Project">{{ project.name }}</td>
+                    <td data-label="Type">{{ project.type }}</td>
+                    <td data-label="Status">
+                        {% if project.name in processes %}
+                            <span class="running">Running</span>
+                        {% else %}
+                            <span class="stopped">Stopped</span>
+                        {% endif %}
+                    </td>
+                    <td data-label="Commands">
+                        {% for cmd in project.commands %}
+                            <div class="cmd">{{ cmd }}</div>
+                        {% endfor %}
+                    </td>
+                    <td data-label="Action" class="action-buttons">
+                        {% if project.name in processes %}
+                            <button class="stop" onclick="stopProject('{{ project.name }}')">Stop</button>
+                            {% if project.url %}
+                                <a class="go-btn" href="{{ project.url }}" target="_blank">Go to App</a>
+                            {% endif %}
+                        {% else %}
+                            <button class="start" onclick="startProject('{{ project.name }}')">Start</button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function startProject(name) {
+            fetch(`/start/${name}`, {method: 'POST'})
+                .then(res => res.json())
+                .then(() => location.reload());
+        }
+        function stopProject(name) {
+            fetch(`/stop/${name}`, {method: 'POST'})
+                .then(res => res.json())
+                .then(() => location.reload());
+        }
+    </script>
+</body>
+</html> 

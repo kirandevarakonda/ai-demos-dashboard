@@ -1,0 +1,5 @@
+{
+  "name": "Blockchain Transparency Explainer",
+  "description": "An application that takes an Ethereum wallet address, fetches its latest transactions, and uses AI to generate plain-English explanations for each one, displayed in a clear, modern timeline.",
+  "requestFramePermissions": []
+}

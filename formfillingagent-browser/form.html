@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Local Insurance Form</title>
+    <style>
+        body {
+            background: #f4f7fa;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            background: #fff;
+            max-width: 600px;
+            margin: 40px auto 24px auto;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+            padding: 32px 36px 24px 36px;
+        }
+        h2 {
+            text-align: center;
+            color: #1a365d;
+            margin-bottom: 24px;
+        }
+        .section-title {
+            margin-top: 24px;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            color: #2b4360;
+            border-bottom: 1px solid #e0e6ed;
+            padding-bottom: 4px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #2b4360;
+            font-weight: 500;
+        }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #c3cfe2;
+            border-radius: 6px;
+            background: #f8fafc;
+            margin-bottom: 18px;
+            font-size: 1em;
+            transition: border 0.2s;
+        }
+        input[type="text"]:focus, input[type="email"]:focus {
+            border: 1.5px solid #3182ce;
+            outline: none;
+            background: #fff;
+        }
+        button[type="submit"] {
+            width: 100%;
+            background: linear-gradient(90deg, #3182ce 60%, #63b3ed 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 0;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            box-shadow: 0 2px 8px rgba(49,130,206,0.08);
+            transition: background 0.2s;
+        }
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, #2563eb 60%, #4299e1 100%);
+        }
+        .json-preview {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 0.98em;
+            margin-top: 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+    <script>
+        function updateDisplay() {
+            const data = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                dob: document.getElementById('dob').value,
+                policy: document.getElementById('policy').value,
+                hospital: document.getElementById('hospital').value,
+                policy_issuer: document.getElementById('policy_issuer').value,
+                insured_address: document.getElementById('insured_address').value,
+                insured_phone: document.getElementById('insured_phone').value,
+                claim_amount: document.getElementById('claim_amount').value,
+                admission_date: document.getElementById('admission_date').value,
+                discharge_date: document.getElementById('discharge_date').value,
+                diagnosis: document.getElementById('diagnosis').value,
+                doctor_name: document.getElementById('doctor_name').value,
+                hospital_address: document.getElementById('hospital_address').value,
+                relationship: document.getElementById('relationship').value
+            };
+            document.getElementById('display').textContent = JSON.stringify(data, null, 2);
+        }
+        function submitForm(event) {
+            event.preventDefault();
+            const data = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                dob: document.getElementById('dob').value,
+                policy: document.getElementById('policy').value,
+                hospital: document.getElementById('hospital').value,
+                policy_issuer: document.getElementById('policy_issuer').value,
+                insured_address: document.getElementById('insured_address').value,
+                insured_phone: document.getElementById('insured_phone').value,
+                claim_amount: document.getElementById('claim_amount').value,
+                admission_date: document.getElementById('admission_date').value,
+                discharge_date: document.getElementById('discharge_date').value,
+                diagnosis: document.getElementById('diagnosis').value,
+                doctor_name: document.getElementById('doctor_name').value,
+                hospital_address: document.getElementById('hospital_address').value,
+                relationship: document.getElementById('relationship').value
+            };
+            fetch('/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(r => r.text()).then(msg => alert(msg));
+        }
+        window.onload = function() {
+            document.querySelectorAll('input').forEach(input => {
+                input.addEventListener('input', updateDisplay);
+            });
+            document.getElementById('insurance-form').addEventListener('submit', submitForm);
+            updateDisplay();
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Insurance Claim Form</h2>
+        <form id="insurance-form">
+            <div class="section-title">Personal Details</div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email">
+
+            <label for="dob">Date of Birth:</label>
+            <input type="text" id="dob" name="dob" placeholder="YYYY-MM-DD">
+
+            <label for="relationship">Relationship to Policyholder:</label>
+            <input type="text" id="relationship" name="relationship" placeholder="Relationship">
+
+            <div class="section-title">Policy Details</div>
+            <label for="policy">Policy Number:</label>
+            <input type="text" id="policy" name="policy" placeholder="Policy Number">
+
+            <label for="policy_issuer">Policy Issuer:</label>
+            <input type="text" id="policy_issuer" name="policy_issuer" placeholder="Policy Issuer">
+
+            <div class="section-title">Insured Contact</div>
+            <label for="insured_address">Insured Address:</label>
+            <input type="text" id="insured_address" name="insured_address" placeholder="Insured Address">
+
+            <label for="insured_phone">Insured Phone:</label>
+            <input type="text" id="insured_phone" name="insured_phone" placeholder="Insured Phone">
+
+            <div class="section-title">Hospitalization Details</div>
+            <label for="hospital">Hospital Name:</label>
+            <input type="text" id="hospital" name="hospital" placeholder="Hospital Name">
+
+            <label for="hospital_address">Hospital Address:</label>
+            <input type="text" id="hospital_address" name="hospital_address" placeholder="Hospital Address">
+
+            <label for="admission_date">Date of Admission:</label>
+            <input type="text" id="admission_date" name="admission_date" placeholder="YYYY-MM-DD">
+
+            <label for="discharge_date">Date of Discharge:</label>
+            <input type="text" id="discharge_date" name="discharge_date" placeholder="YYYY-MM-DD">
+
+            <label for="diagnosis">Diagnosis:</label>
+            <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis">
+
+            <label for="doctor_name">Doctor Name:</label>
+            <input type="text" id="doctor_name" name="doctor_name" placeholder="Doctor Name">
+
+            <div class="section-title">Claim Details</div>
+            <label for="claim_amount">Claim Amount:</label>
+            <input type="text" id="claim_amount" name="claim_amount" placeholder="Claim Amount">
+
+            <button type="submit">Submit</button>
+        </form>
+        <h3 style="margin-top:32px; color:#2b4360;">Current Form Data (JSON):</h3>
+        <pre id="display" class="json-preview"></pre>
+    </div>
+</body>
+</html> 

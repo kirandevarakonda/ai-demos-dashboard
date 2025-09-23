@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(210, 25%, 7.8431%);
+  --card: hsl(180, 6.6667%, 97.0588%);
+  --card-foreground: hsl(210, 25%, 7.8431%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(210, 25%, 7.8431%);
+  --primary: hsl(216.8, 86.5%, 53.1%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(210, 25%, 7.8431%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --muted: hsl(240, 1.9608%, 90%);
+  --muted-foreground: hsl(210, 25%, 7.8431%);
+  --accent: hsl(211.5789, 51.3514%, 92.7451%);
+  --accent-foreground: hsl(216.8, 86.5%, 53.1%);
+  --destructive: hsl(356.3033, 90.5579%, 54.3137%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(201.4286, 30.4348%, 90.9804%);
+  --input: hsl(200, 23.0769%, 97.4510%);
+  --ring: hsl(216.8, 86.5%, 53.1%);
+  --chart-1: hsl(216.8, 86.5%, 53.1%);
+  --chart-2: hsl(159.7826, 100%, 36.0784%);
+  --chart-3: hsl(42.0290, 92.8251%, 56.2745%);
+  --chart-4: hsl(147.1429, 78.5047%, 41.9608%);
+  --chart-5: hsl(341.4894, 75.2000%, 50.9804%);
+  --sidebar: hsl(180, 6.6667%, 97.0588%);
+  --sidebar-foreground: hsl(210, 25%, 7.8431%);
+  --sidebar-primary: hsl(216.8, 86.5%, 53.1%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(211.5789, 51.3514%, 92.7451%);
+  --sidebar-accent-foreground: hsl(216.8, 86.5%, 53.1%);
+  --sidebar-border: hsl(205.0000, 25.0000%, 90.5882%);
+  --sidebar-ring: hsl(216.8, 86.5%, 53.1%);
+  
+  /* Medical themed colors */
+  --medical-blue-50: hsl(216, 100%, 97%);
+  --medical-blue-500: hsl(216.8, 86.5%, 53.1%);
+  --medical-blue-600: hsl(217.2, 91.2%, 59.8%);
+  --medical-blue-700: hsl(221.2, 83.2%, 53.3%);
+  
+  --health-green-50: hsl(151, 81%, 96%);
+  --health-green-100: hsl(149, 80%, 90%);
+  --health-green-500: hsl(160.1, 94.1%, 37.3%);
+  --health-green-600: hsl(158.7, 93%, 30.4%);
+  
+  --crypto-gold-50: hsl(48, 100%, 96%);
+  --crypto-gold-100: hsl(48, 96%, 89%);
+  --crypto-gold-400: hsl(45, 93%, 58%);
+  --crypto-gold-500: hsl(38, 92%, 50%);
+  --crypto-gold-600: hsl(32, 95%, 44%);
+  --crypto-gold-700: hsl(26, 90%, 37%);
+
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius: 1.3rem;
+  --shadow-2xs: 0px 2px 0px 0px hsl(216.8, 86.5%, 53.1%, 0.00);
+  --shadow-xs: 0px 2px 0px 0px hsl(216.8, 86.5%, 53.1%, 0.00);
+  --shadow-sm: 0px 2px 0px 0px hsl(216.8, 86.5%, 53.1%, 0.00), 0px 1px 2px -1px hsl(216.8, 86.5%, 53.1%, 0.00);
+  --shadow: 0px 2px 0px 0px hsl(216.8, 86.5%, 53.1%, 0.00), 0px 1px 2px -1px hsl(216.8, 86.5%, 53.1%, 0.00);
+  --shadow-md: 0px 2px 0px 0px hsl(216.8, 86.5%, 53.1%, 0.00), 0px 2px 4px -1px hsl(216.8, 86.5%, 53.1%, 0.00);
+  --shadow-lg: 0px 2px 0px 0px hsl(216.8, 86.5%, 53.1%, 0.00), 0px 4px 6px -1px hsl(216.8, 86.5%, 53.1%, 0.00);
+  --shadow-xl: 0px 2px 0px 0px hsl(216.8, 86.5%, 53.1%, 0.00), 0px 8px 10px -1px hsl(216.8, 86.5%, 53.1%, 0.00);
+  --shadow-2xl: 0px 2px 0px 0px hsl(216.8, 86.5%, 53.1%, 0.00);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+}
+
+.dark {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(200, 6.6667%, 91.1765%);
+  --card: hsl(228, 9.8039%, 10%);
+  --card-foreground: hsl(0, 0%, 85.0980%);
+  --popover: hsl(0, 0%, 0%);
+  --popover-foreground: hsl(200, 6.6667%, 91.1765%);
+  --primary: hsl(216.8, 86.5%, 53.1%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(195.0000, 15.3846%, 94.9020%);
+  --secondary-foreground: hsl(210, 25%, 7.8431%);
+  --muted: hsl(0, 0%, 9.4118%);
+  --muted-foreground: hsl(210, 3.3898%, 46.2745%);
+  --accent: hsl(205.7143, 70%, 7.8431%);
+  --accent-foreground: hsl(216.8, 86.5%, 53.1%);
+  --destructive: hsl(356.3033, 90.5579%, 54.3137%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(210, 5.2632%, 14.9020%);
+  --input: hsl(207.6923, 27.6596%, 18.4314%);
+  --ring: hsl(216.8, 86.5%, 53.1%);
+  --chart-1: hsl(216.8, 86.5%, 53.1%);
+  --chart-2: hsl(159.7826, 100%, 36.0784%);
+  --chart-3: hsl(42.0290, 92.8251%, 56.2745%);
+  --chart-4: hsl(147.1429, 78.5047%, 41.9608%);
+  --chart-5: hsl(341.4894, 75.2000%, 50.9804%);
+  --sidebar: hsl(228, 9.8039%, 10%);
+  --sidebar-foreground: hsl(0, 0%, 85.0980%);
+  --sidebar-primary: hsl(216.8, 86.5%, 53.1%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(205.7143, 70%, 7.8431%);
+  --sidebar-accent-foreground: hsl(216.8, 86.5%, 53.1%);
+  --sidebar-border: hsl(205.7143, 15.7895%, 26.0784%);
+  --sidebar-ring: hsl(216.8, 86.5%, 53.1%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+
+  /* Custom medical theme classes */
+  .medical-blue-50 {
+    background-color: var(--medical-blue-50);
+  }
+  
+  .medical-blue-500 {
+    background-color: var(--medical-blue-500);
+  }
+  
+  .medical-blue-600 {
+    background-color: var(--medical-blue-600);
+  }
+  
+  .medical-blue-700 {
+    background-color: var(--medical-blue-700);
+  }
+  
+  .health-green-50 {
+    background-color: var(--health-green-50);
+  }
+  
+  .health-green-100 {
+    background-color: var(--health-green-100);
+  }
+  
+  .health-green-500 {
+    background-color: var(--health-green-500);
+  }
+  
+  .health-green-600 {
+    background-color: var(--health-green-600);
+  }
+  
+  .crypto-gold-50 {
+    background-color: var(--crypto-gold-50);
+  }
+  
+  .crypto-gold-100 {
+    background-color: var(--crypto-gold-100);
+  }
+  
+  .crypto-gold-400 {
+    background-color: var(--crypto-gold-400);
+  }
+  
+  .crypto-gold-500 {
+    background-color: var(--crypto-gold-500);
+  }
+  
+  .crypto-gold-600 {
+    background-color: var(--crypto-gold-600);
+  }
+  
+  .crypto-gold-700 {
+    background-color: var(--crypto-gold-700);
+  }
+
+  /* Text color utilities */
+  .text-medical-blue-500 {
+    color: var(--medical-blue-500);
+  }
+  
+  .text-medical-blue-600 {
+    color: var(--medical-blue-600);
+  }
+  
+  .text-health-green-600 {
+    color: var(--health-green-600);
+  }
+  
+  .text-health-green-700 {
+    color: var(--health-green-700);
+  }
+  
+  .text-crypto-gold-600 {
+    color: var(--crypto-gold-600);
+  }
+  
+  .text-crypto-gold-700 {
+    color: var(--crypto-gold-700);
+  }
+
+  /* Background utilities */
+  .bg-medical-blue-50 {
+    background-color: var(--medical-blue-50);
+  }
+  
+  .bg-medical-blue-100 {
+    background-color: hsl(216, 87%, 91%);
+  }
+  
+  .bg-medical-blue-500 {
+    background-color: var(--medical-blue-500);
+  }
+  
+  .bg-medical-blue-600 {
+    background-color: var(--medical-blue-600);
+  }
+  
+  .bg-health-green-50 {
+    background-color: var(--health-green-50);
+  }
+  
+  .bg-health-green-100 {
+    background-color: var(--health-green-100);
+  }
+  
+  .bg-health-green-500 {
+    background-color: var(--health-green-500);
+  }
+  
+  .bg-health-green-600 {
+    background-color: var(--health-green-600);
+  }
+  
+  .bg-crypto-gold-50 {
+    background-color: var(--crypto-gold-50);
+  }
+  
+  .bg-crypto-gold-100 {
+    background-color: var(--crypto-gold-100);
+  }
+  
+  .bg-crypto-gold-400 {
+    background-color: var(--crypto-gold-400);
+  }
+  
+  .bg-crypto-gold-500 {
+    background-color: var(--crypto-gold-500);
+  }
+  
+  .bg-crypto-gold-600 {
+    background-color: var(--crypto-gold-600);
+  }
+
+  /* Hover utilities */
+  .hover\:bg-medical-blue-600:hover {
+    background-color: var(--medical-blue-600);
+  }
+  
+  .hover\:bg-health-green-600:hover {
+    background-color: var(--health-green-600);
+  }
+  
+  .hover\:text-medical-blue-600:hover {
+    color: var(--medical-blue-600);
+  }
+
+  /* Border utilities */
+  .border-medical-blue-300 {
+    border-color: hsl(216, 87%, 82%);
+  }
+  
+  .border-health-green-200 {
+    border-color: hsl(149, 80%, 85%);
+  }
+
+  .hover\:border-medical-blue-300:hover {
+    border-color: hsl(216, 87%, 82%);
+  }
+}
