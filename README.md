@@ -91,3 +91,141 @@ If a project directory name exists as a key in `dashboard_config.json`, the dash
         -   Checks for `package.json` (Node.js) and suggests `npm run dev`.
         -   Checks for `.py` files (Python) and suggests `streamlit run <first_py_file>`.
     -   Retrieves an optional `url` from `dashboard_config.json`.
+
+## Project-Specific Setup
+
+Each sub-project within this dashboard has its own dependencies and running instructions. Follow these steps for each project you wish to run:
+
+### Blockchain Explorer
+1.  Navigate to the project directory:
+    ```bash
+    cd blockchain-explorer
+    ```
+2.  Install Node.js dependencies:
+    ```bash
+    npm install
+    ```
+3.  Run the application:
+    ```bash
+    npm run dev
+    ```
+
+### Content Generator (Frontend)
+1.  Navigate to the project directory:
+    ```bash
+    cd content-generator
+    ```
+2.  Install Node.js dependencies:
+    ```bash
+    npm install
+    ```
+3.  Run the application:
+    ```bash
+    npm run dev
+    ```
+
+### Content Generator (Backend)
+1.  Navigate to the backend directory:
+    ```bash
+    cd content-generator/backend
+    ```
+2.  Install Node.js dependencies:
+    ```bash
+    npm install
+    ```
+3.  Install Python dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+4.  Run the application:
+    ```bash
+    npm start
+    ```
+
+### Form Filling Agent (Browser)
+1.  Navigate to the project directory:
+    ```bash
+    cd formfillingagent-browser
+    ```
+2.  Install Python dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  Run the Streamlit application:
+    ```bash
+    streamlit run app.py --server.port 8507 # Or the port specified in dashboard_config.json
+    ```
+4.  Run the Python server (if needed, check `dashboard_config.json` for details):
+    ```bash
+    python server.py --port 9001 # Or the port specified in dashboard_config.json
+    ```
+
+### MediChainAI
+1.  Navigate to the project directory:
+    ```bash
+    cd MediChainAI
+    ```
+2.  Install Node.js dependencies:
+    ```bash
+    npm install
+    ```
+3.  Run the application:
+    ```bash
+    npm run dev
+    ```
+
+### Maskdata
+1.  Navigate to the project directory:
+    ```bash
+    cd Maskdata
+    ```
+2.  Install Python dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  Run the application:
+    ```bash
+    streamlit run app.py
+    ```
+
+### Summarizer_AI
+1.  Navigate to the project directory:
+    ```bash
+    cd Summarizer_AI
+    ```
+2.  Install Python dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  Run the application:
+    ```bash
+    streamlit run app.py
+    ```
+
+### MultiAgentChatbot
+1.  Navigate to the project directory:
+    ```bash
+    cd multiagentchatbot
+    ```
+2.  Install Node.js dependencies:
+    ```bash
+    npm install
+    ```
+3.  Run the application:
+    ```bash
+    npm run dev
+    ```
+
+### Linkedin_lead_generator
+1.  Navigate to the project directory:
+    ```bash
+    cd Linkedin_lead_generator
+    ```
+2.  Install Python dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  Run the application (check `dashboard_config.json` for the specific command, likely `python app.py` or similar):
+    ```bash
+    python app.py
+    ```
