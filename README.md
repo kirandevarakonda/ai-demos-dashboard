@@ -1,231 +1,376 @@
-# AI Project Dashboard
+# AI Demos Dashboard
 
-## Overview
+A unified web dashboard to manage and run multiple AI demo projects from a single interface.
 
-This is a simple Flask-based web dashboard designed to help manage and run various AI projects located in subdirectories. It automatically detects projects and allows you to start and stop them via a web interface.
+## ✨ Features
 
-## Architecture
+- 🎯 **Single Dashboard**: Manage all your AI projects from one place
+- 🚀 **Quick Launch**: Start/stop projects with a click
+- 🔍 **Auto-Detection**: Automatically detects Node.js and Python projects
+- ⚙️ **Configurable**: Customize project commands and URLs
+- 🌐 **Direct Access**: Open each project in your browser directly from the dashboard
 
-The dashboard is a single-file Flask application (`app.py`). It uses the following components:
+---
 
-- **Flask**: The web framework to serve the dashboard.
-- **subprocess**: To run project commands in separate processes.
-- **threading**: To run multiple project processes concurrently without blocking the main Flask application thread.
-- **signal**: To handle stopping processes gracefully.
-- **json**: To load project configurations from `dashboard_config.json`.
+## 🐳 Docker Setup (Recommended for Easy Deployment)
 
-Projects are detected by scanning subdirectories within the dashboard's directory. The dashboard attempts to auto-detect commands for Node.js (`package.json`) and Python (`.py` files) projects, but this can be overridden or extended using a configuration file.
+**Want to run on any system with zero setup hassle?** Use Docker!
 
-## How to Run
+**⚠️ Important:** Set up your API keys first (see below)!
 
-1.  **Navigate** to the `aidashboard` directory in your terminal.
-    ```bash
-    cd /path/to/your/aidashboard
-    ```
-2.  **Create a virtual environment** (recommended):
-    -   On macOS/Linux:
-        ```bash
-        source venv/bin/activate
-        ```
-    -   On Windows:
-        ```bash
-        .\venv\Scripts\activate
-        ```
-3.  **Install dependencies one by one**: Install each package listed in `requirements.txt` individually.
-    ```bash
-    pip install Flask
-    pip install psutil
-    pip install langchain_openai
-    pip install browser_use
-    pip install python-dotenv
-    pip install pandas
-    pip install streamlit
-    pip install PyPDF2
-    pip install xlsxwriter
-    pip install pdfplumber
-    pip install playwright
-    pip install openai
-    ```
-4.  **Run the application**: Execute the `app.py` file.
+```bash
+# 1. Setup environment variables
+cp .env.example .env
+# Edit .env and add your API keys
 
-    ```bash
-    python app.py
-    ```
+# 2. Build and start everything
+docker-compose up -d --build
+```
 
-5.  **Access the dashboard**: Open your web browser and go to `http://localhost:5000/`.
+Then open: **http://localhost:5000**
 
-## Configuration (`dashboard_config.json`)
+👉 **[Full Docker Setup Guide](DOCKER_SETUP.md)**
 
-You can customize project detection and execution using the `dashboard_config.json` file in the `aidashboard` directory.
+---
 
-This JSON file is a dictionary where keys are project directory names and values are configuration objects for that project.
+## 🔑 API Keys Setup (Required!)
 
-Example:
+Many projects require API keys to function. Set them up before running:
+
+```bash
+# Copy the example file
+cp .env.example .env
+
+# Edit .env and add your keys
+nano .env  # or use your favorite editor
+```
+
+**Required API Keys:**
+- **OPENAI_API_KEY** - For content-generator, Summarizer_AI, formfillingagent-browser
+- **GEMINI_API_KEY** - For blockchain-explorer  
+- **Firebase Config** - For content-generator authentication (6 variables)
+
+👉 **[Complete API Keys Setup Guide](ENV_SETUP.md)** - How to get each key
+
+---
+
+## 🚀 Quick Start (Local Setup)
+
+### Prerequisites
+- **Python 3.8+**
+- **Node.js 16+** (for Node.js-based projects)
+
+### Step 1: Clone & Setup Dashboard
+
+```bash
+# Navigate to the project directory
+cd ai-demos-dashboard
+
+# Run the automated setup script
+./setup.sh
+```
+
+That's it! The script will:
+- ✅ Create a Python virtual environment
+- ✅ Install all required Python packages
+- ✅ Install Playwright browsers
+- ✅ Verify your system has Python and Node.js
+
+### Step 2: Setup All Projects (Recommended)
+
+```bash
+# Activate the virtual environment
+source venv/bin/activate
+
+# Setup all projects at once
+./setup_all_projects.sh
+```
+
+This will install dependencies for all projects automatically!
+
+**Or** setup individual projects:
+```bash
+./setup_project.sh <project-name>
+```
+
+### Step 3: Run the Dashboard
+
+```bash
+# Start the dashboard (venv should be active)
+python app.py
+```
+
+Access the dashboard at: **http://localhost:5000**
+
+### Check Setup Status Anytime
+
+```bash
+./check_status.sh
+```
+
+This shows which projects are ready to run!
+
+---
+
+## 📦 Setting Up Individual Projects
+
+Each project needs its dependencies installed before it can run. You can do this in two ways:
+
+### Option 1: Automated Setup (Recommended)
+
+```bash
+# Activate the virtual environment first
+source venv/bin/activate
+
+# Setup a specific project
+./setup_project.sh <project-directory>
+
+# Examples:
+./setup_project.sh blockchain-explorer
+./setup_project.sh MediChainAI
+./setup_project.sh Summarizer_AI
+```
+
+### Option 2: Manual Setup
+
+Navigate to the project directory and install dependencies:
+
+**For Node.js projects:**
+```bash
+cd <project-directory>
+npm install
+```
+
+**For Python projects:**
+```bash
+cd <project-directory>
+pip install -r requirements.txt
+```
+
+---
+
+## 📚 Available Projects
+
+| Project | Type | Description |
+|---------|------|-------------|
+| `blockchain-explorer` | Node.js | Blockchain exploration and visualization |
+| `content-generator` | Node.js + Python | AI-powered content generation tool |
+| `MediChainAI` | Node.js | Medical blockchain application |
+| `multiagentchatbot` | Node.js | Multi-agent conversational AI |
+| `formfillingagent-browser` | Python/Streamlit | Automated form filling agent |
+| `Summarizer_AI` | Python/Streamlit | AI text summarization tool |
+| `Maskdata` | Python/Streamlit | Data masking and privacy tool |
+| `Linkedin_lead_generator` | Python | LinkedIn automation tool |
+
+---
+
+## ⚙️ Configuration
+
+Projects are configured via `dashboard_config.json`. Each project can specify:
+
+- `command`: Single command to run the project
+- `commands`: Multiple commands to run sequentially
+- `url`: The local URL where the project will be accessible
+
+### Example Configuration
 
 ```json
 {
-  "my_project": {
-    "commands": ["command1 arg1", "command2"],
-    "url": "http://localhost:8000/"
+  "blockchain-explorer": {
+    "command": "npm run dev",
+    "url": "http://localhost:5173/"
   },
-  "another_project": {
-    "command": "single_command",
+  "Summarizer_AI": {
+    "command": "streamlit run app.py",
     "url": "http://localhost:8501/"
   }
 }
 ```
 
--   `commands`: A list of commands to run for the project. These commands will be executed sequentially in the project's directory.
--   `command`: A single command to run (alternative to `commands`).
--   `url`: The URL where the project's application can be accessed (used for the "Open in App" link in the dashboard UI).
+### Auto-Detection
 
-If a project directory name exists as a key in `dashboard_config.json`, the dashboard will use the `commands` or `command` specified there instead of attempting auto-detection.
+If a project isn't in the config, the dashboard will auto-detect:
+- **Node.js projects** (has `package.json`) → runs `npm run dev`
+- **Python projects** (has `.py` files) → runs `streamlit run <first_py_file>`
 
-## Project Detection Logic
+---
 
-1.  Iterates through subdirectories in the dashboard's root.
-2.  For each subdirectory (project):
-    -   Checks if the project name exists as a key in `dashboard_config.json`.
-    -   If yes, it uses the `commands` or `command` specified in the config.
-    -   If no, it attempts to auto-detect:
-        -   Checks for `package.json` (Node.js) and suggests `npm run dev`.
-        -   Checks for `.py` files (Python) and suggests `streamlit run <first_py_file>`.
-    -   Retrieves an optional `url` from `dashboard_config.json`.
+## 🏗️ Architecture
 
-## Project-Specific Setup
+The dashboard is a Flask application that:
 
-Each sub-project within this dashboard has its own dependencies and running instructions. Follow these steps for each project you wish to run:
+- **Scans** subdirectories to detect projects
+- **Manages** project processes using Python's `subprocess` module
+- **Runs** projects concurrently using threading
+- **Serves** a web UI to control everything
 
-### Blockchain Explorer
-1.  Navigate to the project directory:
-    ```bash
-    cd blockchain-explorer
-    ```
-2.  Install Node.js dependencies:
-    ```bash
-    npm install
-    ```
-3.  Run the application:
-    ```bash
-    npm run dev
-    ```
+### Tech Stack
+- **Backend**: Flask (Python)
+- **Process Management**: subprocess, threading, psutil
+- **Configuration**: JSON-based
 
-### Content Generator (Frontend)
-1.  Navigate to the project directory:
-    ```bash
-    cd content-generator
-    ```
-2.  Install Node.js dependencies:
-    ```bash
-    npm install
-    ```
-3.  Run the application:
-    ```bash
-    npm run dev
-    ```
+---
 
-### Content Generator (Backend)
-1.  Navigate to the backend directory:
-    ```bash
-    cd content-generator/backend
-    ```
-2.  Install Node.js dependencies:
-    ```bash
-    npm install
-    ```
-3.  Install Python dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-4.  Run the application:
-    ```bash
-    npm start
-    ```
+## 🛠️ Development
 
-### Form Filling Agent (Browser)
-1.  Navigate to the project directory:
-    ```bash
-    cd formfillingagent-browser
-    ```
-2.  Install Python dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-3.  Run the Streamlit application:
-    ```bash
-    streamlit run app.py --server.port 8507 # Or the port specified in dashboard_config.json
-    ```
-4.  Run the Python server (if needed, check `dashboard_config.json` for details):
-    ```bash
-    python server.py --port 9001 # Or the port specified in dashboard_config.json
-    ```
+### Adding a New Project
 
-### MediChainAI
-1.  Navigate to the project directory:
-    ```bash
-    cd MediChainAI
-    ```
-2.  Install Node.js dependencies:
-    ```bash
-    npm install
-    ```
-3.  Run the application:
-    ```bash
-    npm run dev
-    ```
+1. Place your project in a subdirectory of `ai-demos-dashboard/`
+2. (Optional) Add custom configuration to `dashboard_config.json`
+3. Refresh the dashboard - it will auto-detect!
 
-### Maskdata
-1.  Navigate to the project directory:
-    ```bash
-    cd Maskdata
-    ```
-2.  Install Python dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-3.  Run the application:
-    ```bash
-    streamlit run app.py
-    ```
+### Project Requirements
 
-### Summarizer_AI
-1.  Navigate to the project directory:
-    ```bash
-    cd Summarizer_AI
-    ```
-2.  Install Python dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-3.  Run the application:
-    ```bash
-    streamlit run app.py
-    ```
+Your project should:
+- Have either `package.json` (Node.js) or Python files
+- Include a way to start a dev server
+- (Optional) Run on a specific port
 
-### MultiAgentChatbot
-1.  Navigate to the project directory:
-    ```bash
-    cd multiagentchatbot
-    ```
-2.  Install Node.js dependencies:
-    ```bash
-    npm install
-    ```
-3.  Run the application:
-    ```bash
-    npm run dev
-    ```
+---
 
-### Linkedin_lead_generator
-1.  Navigate to the project directory:
-    ```bash
-    cd Linkedin_lead_generator
-    ```
-2.  Install Python dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-3.  Run the application (check `dashboard_config.json` for the specific command, likely `python app.py` or similar):
-    ```bash
-    python app.py
-    ```
+## 📖 Project-Specific Setup Details
+
+<details>
+<summary><b>blockchain-explorer</b></summary>
+
+```bash
+cd blockchain-explorer
+npm install
+npm run dev
+```
+Access at: http://localhost:5173/
+</details>
+
+<details>
+<summary><b>content-generator</b></summary>
+
+**Frontend:**
+```bash
+cd content-generator
+npm install
+npm run dev
+```
+
+**Backend:**
+```bash
+cd content-generator/backend
+npm install
+pip install -r requirements.txt
+npm start
+```
+Access at: http://localhost:8080/
+</details>
+
+<details>
+<summary><b>MediChainAI</b></summary>
+
+```bash
+cd MediChainAI
+npm install
+npm run dev
+```
+Access at: http://localhost:5001/
+</details>
+
+<details>
+<summary><b>multiagentchatbot</b></summary>
+
+```bash
+cd multiagentchatbot
+npm install
+npm run dev
+```
+Access at: http://localhost:8081/
+</details>
+
+<details>
+<summary><b>formfillingagent-browser</b></summary>
+
+```bash
+cd formfillingagent-browser
+pip install -r requirements.txt
+streamlit run app.py --server.port 8507
+```
+Access at: http://localhost:8507/
+</details>
+
+<details>
+<summary><b>Summarizer_AI</b></summary>
+
+```bash
+cd Summarizer_AI
+pip install -r requirements.txt
+streamlit run app.py
+```
+Access at: http://localhost:8501/
+</details>
+
+<details>
+<summary><b>Maskdata</b></summary>
+
+```bash
+cd Maskdata
+pip install -r requirements.txt
+streamlit run app.py
+```
+Access at: http://localhost:8501/
+</details>
+
+<details>
+<summary><b>Linkedin_lead_generator</b></summary>
+
+```bash
+cd Linkedin_lead_generator
+pip install -r requirements.txt
+python linkedin_connect_browseruse.py
+```
+</details>
+
+---
+
+## 🐛 Troubleshooting
+
+### Virtual Environment Not Activating
+```bash
+# On macOS/Linux:
+source venv/bin/activate
+
+# On Windows:
+venv\Scripts\activate
+```
+
+### Port Already in Use
+If a project fails to start due to port conflicts:
+1. Stop any other processes using that port
+2. Or change the port in `dashboard_config.json`
+
+### Permission Denied on Scripts
+```bash
+chmod +x setup.sh setup_project.sh
+```
+
+### Playwright Installation Issues
+```bash
+# Activate venv first
+source venv/bin/activate
+
+# Then install browsers
+playwright install
+```
+
+---
+
+## 📝 License
+
+This project and its sub-projects may have different licenses. Check individual project directories for specific license information.
+
+## 🤝 Contributing
+
+1. Add your AI demo project as a subdirectory
+2. Include a `package.json` or `requirements.txt`
+3. (Optional) Add configuration to `dashboard_config.json`
+4. Submit a pull request!
+
+---
+
+**Happy Building! 🚀**

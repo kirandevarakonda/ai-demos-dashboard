@@ -1,0 +1,59 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Documentation (we still want README in the container)
+SETUP_COMPLETE.md
+
+# Scripts (these are for local use)
+setup.sh
+setup_project.sh
+setup_all_projects.sh
+check_status.sh
+QUICKSTART.md
+
+# Logs
+*.log
+*.pid
+
+# Test files
+*.test.js
+*.spec.js
+test/
+tests/
+
+# Coverage
+.coverage
+coverage/
+
+# Environment
+.env.local
+.env.*.local

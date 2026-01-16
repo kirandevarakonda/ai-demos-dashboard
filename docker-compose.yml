@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  ai-demos-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-demos-dashboard
+    ports:
+      # Dashboard
+      - "5000:5000"
+      # Common project ports
+      - "3000:3000"
+      - "3001:3001"
+      - "3002:3002"
+      - "5001:5001"
+      - "5173:5173"
+      - "8080:8080"
+      - "8081:8081"
+      - "8501:8501"
+      - "8502:8502"
+      - "8507:8507"
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+      - NODE_ENV=${NODE_ENV:-development}
+      # OpenAI API Key (used by multiple projects)
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # Google Gemini API Key (used by blockchain-explorer)
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      # Firebase Configuration (used by content-generator)
+      - VITE_FIREBASE_API_KEY=${VITE_FIREBASE_API_KEY}
+      - VITE_FIREBASE_AUTH_DOMAIN=${VITE_FIREBASE_AUTH_DOMAIN}
+      - VITE_FIREBASE_PROJECT_ID=${VITE_FIREBASE_PROJECT_ID}
+      - VITE_FIREBASE_STORAGE_BUCKET=${VITE_FIREBASE_STORAGE_BUCKET}
+      - VITE_FIREBASE_MESSAGING_SENDER_ID=${VITE_FIREBASE_MESSAGING_SENDER_ID}
+      - VITE_FIREBASE_APP_ID=${VITE_FIREBASE_APP_ID}
+      # Port configurations
+      - PORT=${PORT:-3001}
+      - DASHBOARD_PORT=${DASHBOARD_PORT:-5000}
+      # MediChainAI specific (optional)
+      - SESSION_SECRET=${SESSION_SECRET:-default_session_secret_change_in_production}
+      - REPL_ID=${REPL_ID:-}
+      - REPLIT_DOMAINS=${REPLIT_DOMAINS:-}
+      - ISSUER_URL=${ISSUER_URL:-https://replit.com/oidc}
+      - DATABASE_URL=${DATABASE_URL:-}
+    volumes:
+      # Mount the project files for development
+      - ./:/app
+      # Preserve node_modules and venv
+      - /app/node_modules
+      - /app/venv
+      - /app/blockchain-explorer/node_modules
+      - /app/MediChainAI/node_modules
+      - /app/multiagentchatbot/node_modules
+      - /app/content-generator/node_modules
+      - /app/content-generator/backend/node_modules
+    restart: unless-stopped
+    networks:
+      - ai-demos-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  ai-demos-network:
+    driver: bridge
+
+volumes:
+  node_modules:
+  venv:

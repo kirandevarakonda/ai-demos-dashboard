@@ -20,11 +20,14 @@ else:
 
 def detect_projects(base_path):
     projects = []
+    # Directories to exclude from project detection
+    excluded_dirs = ['templates', '.git', 'venv', '__pycache__', 'node_modules', '.vscode', '.idea']
+    
     for name in os.listdir(base_path):
         path = os.path.join(base_path, name)
         if os.path.isdir(path):
-            # Exclude 'templates' and '.git' directories
-            if name in ['templates', '.git']:
+            # Exclude system and build directories
+            if name in excluded_dirs or name.startswith('.'):
                 continue
             config = DASHBOARD_CONFIG.get(name, {})
             # Check if project is in config and use specified commands, otherwise auto-detect
@@ -96,4 +99,4 @@ def stop_project(project_name):
     return jsonify({'status': 'stopped'})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000) 
+    app.run(debug=True, host='0.0.0.0', port=5000) 
