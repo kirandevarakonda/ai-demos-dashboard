@@ -48,17 +48,17 @@ function runPythonScript(scriptPath, args) {
   });
 }
 
-// API endpoints
+// API endpoints with DSPy optimization support
 app.post('/api/keywords', async (req, res) => {
   try {
-    const { seedKeyword } = req.body;
+    const { seedKeyword, useDspy = true } = req.body;
     if (!seedKeyword) {
       return res.status(400).json({ error: 'Seed keyword is required' });
     }
 
     const result = await runPythonScript(
-      path.join(__dirname, 'llm_service.py'),
-      ['generate_keywords', seedKeyword]
+      path.join(__dirname, 'llm_service_enhanced.py'),
+      ['generate_keywords', seedKeyword, String(useDspy)]
     );
     res.json(result);
   } catch (error) {
@@ -69,14 +69,14 @@ app.post('/api/keywords', async (req, res) => {
 
 app.post('/api/titles', async (req, res) => {
   try {
-    const { keyword } = req.body;
+    const { keyword, useDspy = true } = req.body;
     if (!keyword) {
       return res.status(400).json({ error: 'Keyword is required' });
     }
 
     const result = await runPythonScript(
-      path.join(__dirname, 'llm_service.py'),
-      ['generate_titles', keyword]
+      path.join(__dirname, 'llm_service_enhanced.py'),
+      ['generate_titles', keyword, String(useDspy)]
     );
     res.json(result);
   } catch (error) {
@@ -87,14 +87,14 @@ app.post('/api/titles', async (req, res) => {
 
 app.post('/api/topics', async (req, res) => {
   try {
-    const { title } = req.body;
+    const { title, useDspy = true } = req.body;
     if (!title) {
       return res.status(400).json({ error: 'Title is required' });
     }
 
     const result = await runPythonScript(
-      path.join(__dirname, 'llm_service.py'),
-      ['generate_topics', title]
+      path.join(__dirname, 'llm_service_enhanced.py'),
+      ['generate_topics', title, String(useDspy)]
     );
     res.json(result);
   } catch (error) {
@@ -105,14 +105,14 @@ app.post('/api/topics', async (req, res) => {
 
 app.post('/api/content', async (req, res) => {
   try {
-    const { topic } = req.body;
+    const { topic, useDspy = true } = req.body;
     if (!topic) {
       return res.status(400).json({ error: 'Topic is required' });
     }
 
     const result = await runPythonScript(
-      path.join(__dirname, 'llm_service.py'),
-      ['generate_content', topic]
+      path.join(__dirname, 'llm_service_enhanced.py'),
+      ['generate_content', topic, String(useDspy)]
     );
     res.json(result);
   } catch (error) {
@@ -121,13 +121,60 @@ app.post('/api/content', async (req, res) => {
   }
 });
 
+// MLOps Monitoring Endpoints
+app.get('/api/metrics', async (req, res) => {
+  try {
+    const result = await runPythonScript(
+      path.join(__dirname, 'mlops_monitoring.py'),
+      ['get_metrics']
+    );
+    res.json(result);
+  } catch (error) {
+    console.error('Error fetching metrics:', error);
+    res.status(500).json({ error: error.message || 'Failed to fetch metrics' });
+  }
+});
+
+app.get('/api/metrics/comparison', async (req, res) => {
+  try {
+    const result = await runPythonScript(
+      path.join(__dirname, 'mlops_monitoring.py'),
+      ['compare_prompts']
+    );
+    res.json(result);
+  } catch (error) {
+    console.error('Error comparing prompts:', error);
+    res.status(500).json({ error: error.message || 'Failed to compare prompts' });
+  }
+});
+
+app.get('/api/metrics/history', async (req, res) => {
+  try {
+    const { hours = 24 } = req.query;
+    const result = await runPythonScript(
+      path.join(__dirname, 'mlops_monitoring.py'),
+      ['get_history', String(hours)]
+    );
+    res.json(result);
+  } catch (error) {
+    console.error('Error fetching history:', error);
+    res.status(500).json({ error: error.message || 'Failed to fetch history' });
+  }
+});
+
+// Health check
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 // For local development
 if (process.env.NODE_ENV !== 'production') {
   const port = process.env.PORT || 3001;
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
+    console.log(`MLOps monitoring available at http://localhost:${port}/api/metrics`);
   });
 }
 
 // Export the Express API for Vercel
-module.exports = app; 
+module.exports = app;

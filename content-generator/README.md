@@ -1,4 +1,40 @@
-# Quick Scribe AI Flow
+# Quick Scribe AI Flow - Enhanced with DSPy + MLOps
+
+A **production-grade** AI-powered content generation platform featuring:
+- ✨ **DSPy Prompt Optimization** - Automatic prompt engineering for better quality
+- 📊 **MLOps Monitoring** - Real-time metrics, cost tracking, and quality analytics
+- 🔬 **A/B Testing** - Compare manual vs optimized prompts
+- 💰 **Cost Tracking** - Monitor OpenAI API spending
+- 📈 **Quality Metrics** - SEO, readability, and relevance scores
+
+> **New in v2.0**: This isn't just a content generator - it's a fully monitored, optimized AI platform showcasing modern ML engineering practices!
+
+## 🌟 What's New
+
+### DSPy Integration
+- Chain of Thought reasoning for better outputs
+- Automatic prompt structure optimization
+- Consistent, high-quality results
+
+### MLOps Features
+- Real-time performance monitoring dashboard
+- Cost per endpoint tracking
+- Quality score analytics (SEO, readability, relevance)
+- Prompt version comparison (A/B testing)
+- Historical metrics and trends
+- SQLite database for comprehensive logging
+
+---
+
+## 📚 Documentation
+
+- **[Setup Guide](SETUP_GUIDE.md)** - Complete installation and configuration
+- **[DSPy + MLOps Documentation](README_DSPY_MLOPS.md)** - Detailed feature overview
+- **[Original README](#original-features)** - Basic features and tech stack
+
+---
+
+# Original Features
 
 A modern web application that helps content creators generate SEO-optimized content through an AI-powered workflow. The application uses React for the frontend and a Node.js/Python backend for AI processing.
 
